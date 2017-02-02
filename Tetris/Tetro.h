@@ -3,8 +3,9 @@ class Tetro : public sf::Drawable
 {
 public:
 	Tetro();
+	enum Shape { I, J, L, O, S, T, Z };
 	void update();
-	void createTet();
+	void createTet(Shape s);
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -14,5 +15,6 @@ private:
 	int _height;
 	sf::Vector2f _pos;
 	sf::VertexArray tet;
+	int quads;
 };
 

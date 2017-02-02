@@ -10,7 +10,7 @@ Game::Game()
 
 void Game::run()
 {
-	tetro.createTet();
+	tetro.createTet(Tetro::J);
 	// Gameplay Loop
 	while (window.isOpen())
 	{
