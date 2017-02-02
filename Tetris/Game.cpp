@@ -10,7 +10,8 @@ Game::Game()
 
 void Game::run()
 {
-	tetro.createTet(Tetro::J);
+	// Change parameters for different block
+	tetro.createTet(Tetro::Z);
 	// Gameplay Loop
 	while (window.isOpen())
 	{
