@@ -25,7 +25,7 @@ void Game::run()
 			// debug
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				std::cout << "(" << sf::Mouse::getPosition(window).x << "," << sf::Mouse::getPosition(window).y << ")\n";
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 			{
 				// testing
 
