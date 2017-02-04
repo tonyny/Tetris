@@ -3,7 +3,7 @@ class Tetro : public sf::Drawable, public sf::Transformable
 {
 public:
 	Tetro();
-	enum Shape { I, J, L, O, S, T, Z };
+	enum Shape { L, I, J, S, O, T, Z};
 	void update(sf::Time dt);
 	void createTetro(Shape s);
 
@@ -18,6 +18,8 @@ private:
 	bool _BOUNDLEFT;
 	bool _BOUNDRIGHT;
 	sf::VertexArray tet;
+	sf::Texture texture;
+	sf::Vector2f textureSize;
 	sf::Vector2f _vel;
 	float speed;
 	int quads;

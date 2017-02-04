@@ -4,6 +4,7 @@
 
 Tetro::Tetro()
 {
+	// Initialise values
 	_width = 50;
 	_height = 50;
 	_BOUNDLEFT = 50;
@@ -14,6 +15,11 @@ Tetro::Tetro()
 	_BOUNDLEFT = false;
 	_BOUNDRIGHT = false;
 	movable = true;
+	textureSize = sf::Vector2f(96, 96);
+
+	// Load tileset
+	if (texture.loadFromFile("tileSet.png"))
+		std::cout << "tileset loaded successfully\n";
 }
 
 void Tetro::setPosition(Shape block, sf::Vector2f _pos)
@@ -42,6 +48,11 @@ void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 				quad[2] = sf::Vector2f(_pos.x + _width * 2, _pos.y + _height * i);
 				quad[3] = sf::Vector2f(_pos.x + _width, _pos.y + _height * i);
 			}
+
+			quad[0].texCoords = sf::Vector2f(textureSize.x * 0, 0);
+			quad[1].texCoords = sf::Vector2f(textureSize.x * 1, 0);
+			quad[2].texCoords = sf::Vector2f(textureSize.x * 1, textureSize.y);
+			quad[3].texCoords = sf::Vector2f(0, textureSize.y);
 		}
 	}
 	else if (block == I)
@@ -58,6 +69,11 @@ void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 			quad[1] = sf::Vector2f(_pos.x + _width, _pos.y + (i * _height));
 			quad[2] = sf::Vector2f(_pos.x + _width, _pos.y + _height * (1 + i));
 			quad[3] = sf::Vector2f(_pos.x, _pos.y + _height * (1 + i));
+
+			quad[0].texCoords = sf::Vector2f(textureSize.x * 1, 0);
+			quad[1].texCoords = sf::Vector2f(textureSize.x * 2, 0);
+			quad[2].texCoords = sf::Vector2f(textureSize.x * 2, textureSize.y);
+			quad[3].texCoords = sf::Vector2f(textureSize.x * 1, textureSize.y);
 		}
 	}
 	else if (block == J)
@@ -83,6 +99,11 @@ void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 				quad[2] = sf::Vector2f(_pos.x, _pos.y + _height * (1 + (i - 1)));
 				quad[3] = sf::Vector2f(_pos.x - _width, _pos.y + _height * (1 + (i - 1)));
 			}
+
+			quad[0].texCoords = sf::Vector2f(textureSize.x * 2, 0);
+			quad[1].texCoords = sf::Vector2f(textureSize.x * 3, 0);
+			quad[2].texCoords = sf::Vector2f(textureSize.x * 3, textureSize.y);
+			quad[3].texCoords = sf::Vector2f(textureSize.x * 2, textureSize.y);
 		}
 	}
 	else if (block == S)
@@ -108,6 +129,11 @@ void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 				quad[2] = sf::Vector2f(_pos.x + _width * 2, _pos.y + _height * i);
 				quad[3] = sf::Vector2f(_pos.x + _width, _pos.y + _height * i);
 			}
+
+			quad[0].texCoords = sf::Vector2f(textureSize.x * 3, 0);
+			quad[1].texCoords = sf::Vector2f(textureSize.x * 4, 0);
+			quad[2].texCoords = sf::Vector2f(textureSize.x * 4, textureSize.y);
+			quad[3].texCoords = sf::Vector2f(textureSize.x * 3, textureSize.y);
 		}
 	}
 	else if (block == O)
@@ -133,6 +159,11 @@ void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 				quad[2] = sf::Vector2f(_pos.x + _width * 2, _pos.y + _height * (1 + (i - 2)));
 				quad[3] = sf::Vector2f(_pos.x + _width, _pos.y + _height * (1 + (i - 2)));
 			}
+
+			quad[0].texCoords = sf::Vector2f(textureSize.x * 4, 0);
+			quad[1].texCoords = sf::Vector2f(textureSize.x * 5, 0);
+			quad[2].texCoords = sf::Vector2f(textureSize.x * 5, textureSize.y);
+			quad[3].texCoords = sf::Vector2f(textureSize.x * 4, textureSize.y);
 		}
 	}
 	else if (block == T)
@@ -158,6 +189,11 @@ void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 				quad[2] = sf::Vector2f(_pos.x + _width * 2, _pos.y + _height * (i - 1));
 				quad[3] = sf::Vector2f(_pos.x + _width, _pos.y + _height * (i - 1));
 			}
+
+			quad[0].texCoords = sf::Vector2f(textureSize.x * 5, 0);
+			quad[1].texCoords = sf::Vector2f(textureSize.x * 6, 0);
+			quad[2].texCoords = sf::Vector2f(textureSize.x * 6, textureSize.y);
+			quad[3].texCoords = sf::Vector2f(textureSize.x * 5, textureSize.y);
 		}
 	}
 	else if (block == Z)
@@ -186,6 +222,11 @@ void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 				quad[2] = sf::Vector2f(_pos.x, _pos.y + _height * i);
 				quad[3] = sf::Vector2f(_pos.x - _width, _pos.y + _height * i);
 			}
+
+			quad[0].texCoords = sf::Vector2f(textureSize.x * 6, 0);
+			quad[1].texCoords = sf::Vector2f(textureSize.x * 7, 0);
+			quad[2].texCoords = sf::Vector2f(textureSize.x * 7, textureSize.y);
+			quad[3].texCoords = sf::Vector2f(textureSize.x * 6, textureSize.y);
 		}
 	}
 }
@@ -193,7 +234,7 @@ void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 void Tetro::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
-	//states.texture = &m_texture FUTURE: add textures
+	states.texture = &texture;
 	target.draw(tet, states);
 }
 
@@ -245,7 +286,6 @@ void Tetro::update(sf::Time dt)
 		movementClock.restart();
 	}
 }
-
 
 void Tetro::move(sf::Vector2f offset)
 {
