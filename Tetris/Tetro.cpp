@@ -8,7 +8,6 @@ Tetro::Tetro()
 	_height = 50;
 	_BOUNDLEFT = 50;
 	_BOUNDRIGHT = 600;
-	POS = sf::Vector2f(250.0f, 0.0f);
 	_vel = sf::Vector2f(0, 0);
 	speed = 50;
 	movementClock.restart();

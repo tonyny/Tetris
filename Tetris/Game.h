@@ -18,5 +18,8 @@ private:
 
 	// Game Objects
 	Tetro tetro;
+
+	//
+	std::default_random_engine generator;
 };
 

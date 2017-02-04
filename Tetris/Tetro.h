@@ -10,14 +10,13 @@ public:
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void move(sf::Vector2f offset);
-	void setPosition(Shape s, sf::Vector2f _pos = sf::Vector2f(250, 0));
+	void setPosition(Shape s, sf::Vector2f _pos = sf::Vector2f(300, 0));
 
 	Shape _shape;
 	int _width;
 	int _height;
 	bool _BOUNDLEFT;
 	bool _BOUNDRIGHT;
-	sf::Vector2f POS;
 	sf::VertexArray tet;
 	sf::Vector2f _vel;
 	float speed;
