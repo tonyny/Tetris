@@ -13,6 +13,8 @@ private:
 	int SCREEN_WIDTH = 700;
 	int SCREEN_HEIGHT = 800;
 	sf::RenderWindow window;
+	sf::Time _dt;
+	sf::Clock clock;
 
 	// Game Objects
 	Tetro tetro;

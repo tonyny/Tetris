@@ -11,11 +11,12 @@ Game::Game()
 void Game::run()
 {
 	// Change parameters for different block
-	tetro.createTet(Tetro::Z);
+	tetro.createTetro(Tetro::T);
 	// Gameplay Loop
 	while (window.isOpen())
 	{
-		// Event Handling
+		_dt = clock.restart();
+		// Event Handling 
 		sf::Event e;
 		while (window.pollEvent(e))
 		{
@@ -30,7 +31,7 @@ void Game::run()
 		// Draw
 		draw();
 		// Update
-
+		update();
 		// Display
 		window.display();
 	}
@@ -43,6 +44,5 @@ void Game::draw()
 
 void Game::update()
 {
-
+	tetro.update(_dt);
 }
-

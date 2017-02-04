@@ -4,13 +4,22 @@
 
 Tetro::Tetro()
 {
-	_width = 45;
-	_height = 45;
-	_pos = sf::Vector2f(250.0f, 0.0f);
+	_width = 50;
+	_height = 50;
+	_BOUNDLEFT = 50;
+	_BOUNDRIGHT = 600;
+	POS = sf::Vector2f(250.0f, 0.0f);
+	_vel = sf::Vector2f(0, 0);
+	speed = 50;
+	movementClock.restart();
+	_BOUNDLEFT = false;
+	_BOUNDRIGHT = false;
+	movable = true;
 }
 
-void Tetro::createTet(Shape block)
+void Tetro::setPosition(Shape block, sf::Vector2f _pos)
 {
+	_shape = block;
 	if (block == L)
 	{
 		// Create L tetro
@@ -120,7 +129,6 @@ void Tetro::createTet(Shape block)
 			// Last block is placed to right
 			if (i > 1)
 			{
-				std::cout << "f\n";
 				quad[0] = sf::Vector2f(_pos.x + _width, _pos.y + ((i - 2) * _height));
 				quad[1] = sf::Vector2f(_pos.x + _width * 2, _pos.y + ((i - 2) * _height));
 				quad[2] = sf::Vector2f(_pos.x + _width * 2, _pos.y + _height * (1 + (i - 2)));
@@ -165,7 +173,6 @@ void Tetro::createTet(Shape block)
 			// Gets pointer to current block 
 			if (i <= 1)
 			{
-				std::cout << "1\n";
 				quad[0] = sf::Vector2f(_pos.x, _pos.y + (i * _height));
 				quad[1] = sf::Vector2f(_pos.x + _width, _pos.y + (i * _height));
 				quad[2] = sf::Vector2f(_pos.x + _width, _pos.y + _height * (1 + i));
@@ -175,7 +182,6 @@ void Tetro::createTet(Shape block)
 			// Last two blocks is placed to left
 			if (i > 1)
 			{
-				std::cout << "2\n";
 				quad[0] = sf::Vector2f(_pos.x - _width, _pos.y + ((i - 1) * _height));
 				quad[1] = sf::Vector2f(_pos.x, _pos.y + ((i - 1) * _height));
 				quad[2] = sf::Vector2f(_pos.x, _pos.y + _height * i);
@@ -187,10 +193,71 @@ void Tetro::createTet(Shape block)
 
 void Tetro::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
+	states.transform *= getTransform();
+	//states.texture = &m_texture FUTURE: add textures
 	target.draw(tet, states);
 }
 
-void Tetro::update()
+void Tetro::update(sf::Time dt)
 {
+	// Movement
+	_vel = sf::Vector2f(0, 0);
+	sf::Event e;
+	if (movementClock.getElapsedTime().asSeconds() > 0.1f)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+			_vel.y = -speed;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			if (tet.getBounds().left <= 50)
+			{
+				movable = false;
+				_BOUNDLEFT = true;
+			}
+			if (_BOUNDRIGHT)
+			{
+				_BOUNDRIGHT = false;
+				movable = true;
+			}
+			_vel.x = -speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			_vel.y = speed;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			if (tet.getBounds().left + tet.getBounds().width >= 650)
+			{
+				movable = false;
+				_BOUNDRIGHT = true;
+			}
+			if (_BOUNDLEFT)
+			{
+				_BOUNDLEFT = false;
+				movable = true;
+			}
+			_vel.x = speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			std::cout << "POS: (" << tet[0].position.x << "," << tet[0].position.y << ")\n";
 
+		// Can only move if within boundary -> determine by boolean movable
+		if (movable)
+			move(_vel);
+		movementClock.restart();
+	}
+}
+
+
+void Tetro::move(sf::Vector2f offset)
+{
+	// Move every vertex
+	for (int i = 0; i < tet.getVertexCount(); i++)
+	{
+		tet[i].position = tet[i].position + offset;
+	}
+}
+
+void Tetro::createTetro(Shape s)
+{
+	setPosition(s);
 }
